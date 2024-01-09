@@ -1,0 +1,61 @@
+---
+export const prerender = false
+
+let currentTimeExt
+try {
+  const res = await fetch("https://worldtimeapi.org/api/ip")
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`)
+  }
+  const { utc_datetime } = await res.json()
+  currentTimeExt = new Date(utc_datetime).toLocaleString()
+} catch (error) {
+  console.error("Fetch error:", error)
+  currentTimeExt = "Error fetching time"
+}
+
+let currentTimeLocal
+const API_HOST = process.env.API_HOST || "localhost"
+const API_PORT = process.env.API_PORT || "4321"
+const url = `http://${API_HOST}:${API_PORT}/api/hello`
+try {
+  const res = await fetch(url)
+
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`)
+  }
+  const { message } = await res.json()
+  currentTimeLocal = message
+} catch (error) {
+  console.error("Fetch error:", error)
+  currentTimeLocal = "Error fetching time"
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <title>Astro</title>
+  </head>
+  <body>
+    <h1>SSR time</h1>
+    <h2>from external api:</h2>
+    <time datetime={currentTimeExt}>{currentTimeExt}</time>
+    <hr />
+    <h2>from local api:</h2>
+    <time datetime={currentTimeLocal}>{currentTimeLocal}</time>
+  </body>
+</html>
