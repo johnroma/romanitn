@@ -67,8 +67,18 @@ try {
       <time datetime={currentTimeExt}>{currentTimeExt}</time>
       <hr />
       <h2>from local api:</h2>
-      {process.env.VERCEL_ENV}
-      <time datetime={currentTimeLocal}>{currentTimeLocal}</time>
+
+      <button
+        hx-get={"/partials/hello"}
+        hx-target="#ssrlocal"
+        hx-swap="beforeend"
+        >get xtmx time</button
+      >
+      <time
+        id="ssrlocal"
+        datetime={currentTimeLocal}
+        >{currentTimeLocal}</time
+      >
     </main>
   </body>
 </html>

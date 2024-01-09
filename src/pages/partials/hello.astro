@@ -1,0 +1,23 @@
+---
+export const partial = true
+let currentTimeLocal
+
+const base =
+  process.env.VERCEL_ENV === "production"
+    ? `https://romanitn.vercel.app`
+    : `http://localhost:4321`
+try {
+  const res = await fetch(base + "/api/hello")
+
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`)
+  }
+  const { message } = await res.json()
+  currentTimeLocal = message
+} catch (error) {
+  console.error("Fetch error:", error)
+  currentTimeLocal = "Error fetching time"
+}
+---
+
+<h2>Current time: {currentTimeLocal}</h2>
