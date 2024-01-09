@@ -10,7 +10,3 @@ export default defineConfig({
   //   mode: "standalone",
   // }),
 })
-
-import { defineConfig } from "astro/config"
-
-import node from "@astrojs/node"
