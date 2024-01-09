@@ -1,6 +1,6 @@
 ---
 export const prerender = false
-
+import "@picocss/pico/css/pico.min.css"
 let currentTimeExt
 try {
   const res = await fetch("https://worldtimeapi.org/api/ip")
@@ -33,7 +33,10 @@ try {
 }
 ---
 
-<html lang="en">
+<html
+  data-theme="dark"
+  lang="en"
+>
   <head>
     <meta charset="utf-8" />
     <link
@@ -41,6 +44,11 @@ try {
       type="image/svg+xml"
       href="/favicon.svg"
     />
+    <link
+      rel="stylesheet"
+      href="css/pico.min.css"
+    />
+
     <meta
       name="viewport"
       content="width=device-width"
@@ -52,12 +60,14 @@ try {
     <title>Astro</title>
   </head>
   <body>
-    <h1>SSR time</h1>
-    <h2>from external api:</h2>
-    <time datetime={currentTimeExt}>{currentTimeExt}</time>
-    <hr />
-    <h2>from local api:</h2>
-    {process.env.VERCEL_URL}
-    <time datetime={currentTimeLocal}>{currentTimeLocal}</time>
+    <main class="container">
+      <h1>SSR time</h1>
+      <h2>from external api:</h2>
+      <time datetime={currentTimeExt}>{currentTimeExt}</time>
+      <hr />
+      <h2>from local api:</h2>
+      {process.env.VERCEL_URL} - {base + "/api/hello"}
+      <time datetime={currentTimeLocal}>{currentTimeLocal}</time>
+    </main>
   </body>
 </html>
