@@ -15,11 +15,12 @@ try {
 }
 
 let currentTimeLocal
-const API_HOST = process.env.API_HOST || "localhost"
-const API_PORT = process.env.API_PORT || "4321"
-const url = `http://${API_HOST}:${API_PORT}/api/hello`
+
+const base = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : `http://localhost:4321`
 try {
-  const res = await fetch(url)
+  const res = await fetch(base + "/api/hello")
 
   if (!res.ok) {
     throw new Error(`HTTP error! status: ${res.status}`)
