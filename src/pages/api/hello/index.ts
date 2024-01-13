@@ -9,6 +9,7 @@ export async function GET() {
     {
       headers: {
         "content-type": "application/json;charset=UTF-8",
+        "cache-control": "s-maxage=1, stale-while-revalidate=59",
       },
     }
   )

@@ -7,7 +7,9 @@ import htmx from "astro-htmx"
 export default defineConfig({
   integrations: [htmx()],
   output: "hybrid",
-  adapter: vercel(),
+  adapter: vercel({
+    edgeMiddleware: true,
+  }),
 
   // adapter: node({
   //   mode: "standalone",
