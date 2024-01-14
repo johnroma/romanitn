@@ -1,37 +1,10 @@
 ---
 export const prerender = false
 import "@picocss/pico/css/pico.min.css"
-let currentTimeExt
-try {
-  const res = await fetch("https://worldtimeapi.org/api/ip")
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`)
-  }
-  const { utc_datetime } = await res.json()
-  currentTimeExt = new Date(utc_datetime).toLocaleString()
-} catch (error) {
-  console.error("Fetch error:", error)
-  currentTimeExt = "Error fetching time"
-}
+import { getCurrentTimeExt, getCurrentTimeLocal } from "../lib/currTime"
 
-let currentTimeLocal
-
-const base =
-  process.env.VERCEL_ENV === "production"
-    ? `https://romanitn.vercel.app`
-    : `http://localhost:4321`
-try {
-  const res = await fetch(base + "/api/hello")
-
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`)
-  }
-  const { message } = await res.json()
-  currentTimeLocal = message
-} catch (error) {
-  console.error("Fetch error:", error)
-  currentTimeLocal = "Error fetching time"
-}
+const currentTimeExt = await getCurrentTimeExt()
+const currentTimeLocal = await getCurrentTimeLocal()
 ---
 
 <html
@@ -62,7 +35,8 @@ try {
   </head>
   <body>
     <main class="container">
-      <h1>SSR time</h1>
+      <h1>SSR stuff</h1>
+
       <h2>from external api:</h2>
       <time datetime={currentTimeExt}>{currentTimeExt}</time>
       <hr />

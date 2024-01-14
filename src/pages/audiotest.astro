@@ -1,0 +1,50 @@
+---
+import { fetchAndSetAudio } from "../lib/fetchTextToSpeech"
+const blobSrc = await fetchAndSetAudio(
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+)
+---
+
+<html
+  data-theme="dark"
+  lang="en"
+>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <link
+      rel="stylesheet"
+      href="css/pico.min.css"
+    />
+
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <title>Astro</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1>SSR stuff</h1>
+
+      <h2>get audio fron elevenlabs</h2>
+      {
+        (
+          <audio
+            controls
+            src={blobSrc}
+          />
+        )
+      }
+      <hr />
+    </main>
+  </body>
+</html>
